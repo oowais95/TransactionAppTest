@@ -1,6 +1,7 @@
 package com.smallworld.transaction.Service;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,10 +88,31 @@ public class TransactionService {
 
     /**
      * Counts the number of unique clients that sent or received a transaction
+     * @throws IOException 
      */
-    public long countUniqueClients() {
-        throw new UnsupportedOperationException();
-    }
+    public long countUniqueClients() throws IOException {
+ 
+        String sendersName, recieversName;
+        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
+        
+         Set<String> uniqueNames = new HashSet<String>(); 
+
+        for (TransactionIssue tIssues : transactionIssues) {
+
+         sendersName = tIssues.getSenderFullName();
+         uniqueNames.add(sendersName);   
+         recieversName = tIssues.getBeneficiaryFullName();
+         uniqueNames.add(recieversName);   
+         
+
+        }
+
+        long countOfUniqueClients =  uniqueNames.size();
+
+        return countOfUniqueClients;
+
+     }
 
     /**
      * Returns whether a client (sender or beneficiary) has at least one transaction with a compliance
