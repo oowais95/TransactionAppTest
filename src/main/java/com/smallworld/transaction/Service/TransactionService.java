@@ -44,17 +44,46 @@ public class TransactionService {
 
     /**
      * Returns the sum of the amounts of all transactions sent by the specified client
+     * @throws IOException 
      */
-    public double getTotalTransactionAmountSentBy(String senderFullName) {
-        throw new UnsupportedOperationException();
+    public double getTotalTransactionAmountSentBy(String senderFullName) throws IOException {
+
+        double amount = 0; 
+        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
+
+
+        for (TransactionIssue tIssues : transactionIssues) {
+             
+            if(tIssues.getSenderFullName().equals(senderFullName))
+            {
+                amount+=tIssues.getAmount();
+            }
+        }
+        return amount;
     }
+
+
 
     /**
      * Returns the highest transaction amount
+     * @throws IOException 
      */
-    public double getMaxTransactionAmount() {
-        throw new UnsupportedOperationException();
-    }
+    public double getMaxTransactionAmount() throws IOException {
+
+        double MaxAmount = 0; 
+        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
+        
+
+        for (TransactionIssue tIssues : transactionIssues) {
+
+            if(tIssues.getAmount()>MaxAmount)
+                MaxAmount = tIssues.getAmount();
+        }
+
+        return MaxAmount;
+     }
 
     /**
      * Counts the number of unique clients that sent or received a transaction
@@ -75,6 +104,9 @@ public class TransactionService {
      * Returns all transactions indexed by beneficiary name
      */
     public Map<String, Object> getTransactionsByBeneficiaryName() {
+
+
+
         throw new UnsupportedOperationException();
     }
 
@@ -82,6 +114,7 @@ public class TransactionService {
      * Returns the identifiers of all open compliance issues
      */
     public Set<Integer> getUnsolvedIssueIds() {
+
         throw new UnsupportedOperationException();
     }
 
