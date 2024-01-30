@@ -1,6 +1,7 @@
 package com.smallworld.transaction.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -140,18 +141,29 @@ public class TransactionService {
                 break;
             }
         }
-
         return response;
-
     }
 
     /**
      * Returns all transactions indexed by beneficiary name
+     * @throws IOException 
      */
-    public Map<String, Object> getTransactionsByBeneficiaryName() {
+    public Map<String, TransactionIssue> getTransactionsByBeneficiaryName() throws IOException {
+           
+        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() { });
+        
+        
+        Map<String,TransactionIssue> map = new HashMap<String,TransactionIssue>();
+         //here only one trasaction pr key(beneficiaryName) would be saved - will see for a work around at end
+        //Map<String,List<TransactionIssue>> map = new HashMap<String,List<TransactionIssue>>();
 
-        throw new UnsupportedOperationException();
-    }
+        for (TransactionIssue tIssues : transactionIssues) {
+            map.put(tIssues.getBeneficiaryFullName(), tIssues);
+        }
+        return map;
+ 
+     }
 
     /**
      * Returns the identifiers of all open compliance issues
