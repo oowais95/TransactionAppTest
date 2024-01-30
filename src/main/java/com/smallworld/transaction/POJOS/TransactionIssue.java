@@ -14,7 +14,7 @@ public class TransactionIssue {
     private String beneficiaryFullName;
     private int beneficiaryAge;
     private int issueId;
-    private boolean issueSolved;
+    private Boolean issueSolved;
     private String issueMessage;
 
 }

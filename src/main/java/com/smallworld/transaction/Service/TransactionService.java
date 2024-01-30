@@ -117,9 +117,24 @@ public class TransactionService {
     /**
      * Returns whether a client (sender or beneficiary) has at least one transaction with a compliance
      * issue that has not been solved
+     * @throws IOException 
      */
-    public boolean hasOpenComplianceIssues(String clientFullName) {
-        throw new UnsupportedOperationException();
+    public boolean hasOpenComplianceIssues(String clientFullName) throws IOException {
+
+        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
+         Boolean response = false;
+        
+        for (TransactionIssue tIssues : transactionIssues) {
+            if(tIssues.getIssueSolved() == true)
+               {
+                 response = true;
+                break;
+                }
+        }
+
+        return response;
+
     }
 
     /**
