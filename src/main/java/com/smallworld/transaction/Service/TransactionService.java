@@ -153,7 +153,7 @@ public class TransactionService {
         String jsonResponse = utilService.readText("../../transaction/transactions.json");
         List<TransactionIssue> transactionIssues = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() { });
         
-        
+
         Map<String,TransactionIssue> map = new HashMap<String,TransactionIssue>();
          //here only one trasaction pr key(beneficiaryName) would be saved - will see for a work around at end
         //Map<String,List<TransactionIssue>> map = new HashMap<String,List<TransactionIssue>>();
@@ -167,11 +167,23 @@ public class TransactionService {
 
     /**
      * Returns the identifiers of all open compliance issues
+     * @throws IOException 
      */
-    public Set<Integer> getUnsolvedIssueIds() {
+    public Set<Integer> getUnsolvedIssueIds() throws IOException   {
 
-        throw new UnsupportedOperationException();
-    }
+
+        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
+        Set<Integer> unresolvedIssueIds = new HashSet<Integer>();
+
+        for (TransactionIssue tIssue : transactionIssues){
+            if(tIssue.getIssueSolved()==false){
+                            //as issue identifier is IssueId
+                unresolvedIssueIds.add(tIssue.getIssueId());
+            }
+        }
+        return unresolvedIssueIds;
+     }
 
     /**
      * Returns a list of all solved issue messages
