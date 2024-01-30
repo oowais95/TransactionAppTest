@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 
@@ -207,14 +208,56 @@ public class TransactionService {
      * Returns the 3 transactions with highest amount sorted by amount descending
      */
     public List<Object> getTop3TransactionsByAmount() {
+
+        
         throw new UnsupportedOperationException();
     }
 
     /**
      * Returns the sender with the most total sent amount
      */
-    public Optional<Object> getTopSender() {
-        throw new UnsupportedOperationException();
-    }
+    public String getTopSender() throws IOException {
+
+        
+        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssues> transactions = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssues>>() {});
+
+        Map<String,Double> map = new HashMap<String,Double>();
+        Double amount=0d;
+        String name = "";
+
+        for (TransactionIssues tIssues :transactions)
+        {
+            
+            name = tIssues.getSenderFullName();
+            if(map.containsKey(name)){
+
+               amount =  map.get(name);
+               amount+=tIssues.getAmount();
+               map.put(name, amount);
+               amount=0d;
+            }
+            else{
+                map.put(name, tIssues.getAmount());
+            }
+        
+        }
+       
+
+        String keyWithLargestValue = null;
+        Double largestValue = 0d;
+
+        for (Entry<String, Double> entry : map.entrySet()) {
+            if (entry.getValue() > largestValue) {
+                largestValue = entry.getValue();
+                keyWithLargestValue = entry.getKey();
+            }
+        }
+
+
+        return keyWithLargestValue;
+
+
+     }
 
 }
