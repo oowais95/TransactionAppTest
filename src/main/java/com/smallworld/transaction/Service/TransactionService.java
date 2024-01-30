@@ -23,114 +23,122 @@ public class TransactionService {
     @Autowired
     UtilService utilService;
 
-
     /**
      * Returns the sum of the amounts of all transactions
      */
     public double getTotalTransactionAmount() throws IOException {
 
         double totalTotalTransactionAmout = 0;
-        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
-        //JsonNode jsonNode =  mapper.readTree(jsonResponse);
+        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        // JsonNode jsonNode = mapper.readTree(jsonResponse);
 
-        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
+        List<TransactionIssue> transactionIssues = mapper.readValue(jsonResponse,
+                new TypeReference<List<TransactionIssue>>() {
+                });
 
         for (TransactionIssue tIssues : transactionIssues) {
-            totalTotalTransactionAmout =  tIssues.getAmount();
+            totalTotalTransactionAmout = tIssues.getAmount();
         }
 
         return totalTotalTransactionAmout;
-        //throw new UnsupportedOperationException();
+        // throw new UnsupportedOperationException();
     }
 
     /**
-     * Returns the sum of the amounts of all transactions sent by the specified client
-     * @throws IOException 
+     * Returns the sum of the amounts of all transactions sent by the specified
+     * client
+     * 
+     * @throws IOException
      */
     public double getTotalTransactionAmountSentBy(String senderFullName) throws IOException {
 
-        double amount = 0; 
-        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
-
+        double amount = 0;
+        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues = mapper.readValue(jsonResponse,
+                new TypeReference<List<TransactionIssue>>() {
+                });
 
         for (TransactionIssue tIssues : transactionIssues) {
-             
-            if(tIssues.getSenderFullName().equals(senderFullName))
-            {
-                amount+=tIssues.getAmount();
+
+            if (tIssues.getSenderFullName().equals(senderFullName)) {
+                amount += tIssues.getAmount();
             }
         }
         return amount;
     }
 
-
-
     /**
      * Returns the highest transaction amount
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
     public double getMaxTransactionAmount() throws IOException {
 
-        double MaxAmount = 0; 
-        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
-        
+        double MaxAmount = 0;
+        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues = mapper.readValue(jsonResponse,
+                new TypeReference<List<TransactionIssue>>() {
+                });
 
         for (TransactionIssue tIssues : transactionIssues) {
 
-            if(tIssues.getAmount()>MaxAmount)
+            if (tIssues.getAmount() > MaxAmount)
                 MaxAmount = tIssues.getAmount();
         }
 
         return MaxAmount;
-     }
+    }
 
     /**
      * Counts the number of unique clients that sent or received a transaction
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
     public long countUniqueClients() throws IOException {
- 
+
         String sendersName, recieversName;
-        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
-        
-         Set<String> uniqueNames = new HashSet<String>(); 
+        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues = mapper.readValue(jsonResponse,
+                new TypeReference<List<TransactionIssue>>() {
+                });
+
+        Set<String> uniqueNames = new HashSet<String>();
 
         for (TransactionIssue tIssues : transactionIssues) {
 
-         sendersName = tIssues.getSenderFullName();
-         uniqueNames.add(sendersName);   
-         recieversName = tIssues.getBeneficiaryFullName();
-         uniqueNames.add(recieversName);   
-         
+            sendersName = tIssues.getSenderFullName();
+            uniqueNames.add(sendersName);
+            recieversName = tIssues.getBeneficiaryFullName();
+            uniqueNames.add(recieversName);
 
         }
 
-        long countOfUniqueClients =  uniqueNames.size();
+        long countOfUniqueClients = uniqueNames.size();
 
         return countOfUniqueClients;
 
-     }
+    }
 
     /**
-     * Returns whether a client (sender or beneficiary) has at least one transaction with a compliance
+     * Returns whether a client (sender or beneficiary) has at least one transaction
+     * with a compliance
      * issue that has not been solved
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
     public boolean hasOpenComplianceIssues(String clientFullName) throws IOException {
 
-        String  jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<TransactionIssue> transactionIssues  = mapper.readValue(jsonResponse, new TypeReference<List<TransactionIssue>>() {});
-         Boolean response = false;
-        
+        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        List<TransactionIssue> transactionIssues = mapper.readValue(jsonResponse,
+                new TypeReference<List<TransactionIssue>>() {
+                });
+        Boolean response = false;
+
         for (TransactionIssue tIssues : transactionIssues) {
-            if(tIssues.getIssueSolved() == true)
-               {
-                 response = true;
+            if (tIssues.getIssueSolved() == true) {
+                response = true;
                 break;
-                }
+            }
         }
 
         return response;
@@ -141,8 +149,6 @@ public class TransactionService {
      * Returns all transactions indexed by beneficiary name
      */
     public Map<String, Object> getTransactionsByBeneficiaryName() {
-
-
 
         throw new UnsupportedOperationException();
     }
@@ -175,6 +181,5 @@ public class TransactionService {
     public Optional<Object> getTopSender() {
         throw new UnsupportedOperationException();
     }
-
 
 }
