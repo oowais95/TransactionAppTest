@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class TransactionIssues {
+public class Transaction {
 
     private int mtn;
     private double amount;
