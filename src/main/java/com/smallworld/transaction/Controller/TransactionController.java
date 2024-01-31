@@ -18,17 +18,46 @@ public class TransactionController {
     @GetMapping("/getTotalTransactionAmount")
     public double getTotalTransactionAmount() throws IOException {
 
-       double result = tService.getTotalTransactionAmount();
+        return tService.getTotalTransactionAmount();
 
-       return result;
     }
 
 
     @GetMapping("/getTotalTransactionAmountSentBy{name}")
     public double getTotalTransactionAmountSentBy(@PathVariable("name") String name) throws IOException {
-
-       double result = tService.getTotalTransactionAmountSentBy(name);
-
-       return result;
+ 
+       return tService.getTotalTransactionAmountSentBy(name);
     }
+
+    @GetMapping("/getMaxTransactionAmount")
+    public double getMaxTransactionAmount() throws IOException {
+
+         
+       return  tService.getMaxTransactionAmount();
+
+    }
+
+    
+    @GetMapping("/countUniqueClients")
+    public long countUniqueClients() throws IOException {
+
+       return tService.countUniqueClients();
+    }
+
+    @GetMapping("/hasOpenComplianceIssues")
+    public boolean hasOpenComplianceIssues(@PathVariable("name") String name) throws IOException {
+
+       return tService.hasOpenComplianceIssues(name);
+    }
+
+
+
+    @GetMapping("/getTopSender")
+    public String getTopSender() throws IOException {
+
+       return tService.getTopSender();
+    }
+
+    //other not implemented as it wasnt a requirement
+
 }
