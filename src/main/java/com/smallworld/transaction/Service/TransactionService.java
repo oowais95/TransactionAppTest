@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smallworld.transaction.POJOS.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +31,19 @@ public class TransactionService {
     public double getTotalTransactionAmount() throws IOException {
 
         double totalTotalTransactionAmout = 0;
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        // JsonNode jsonNode = mapper.readTree(jsonResponse);
+      //  String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        String jsonResponse = utilService.responseString;
 
         List<Transaction> transactions = mapper.readValue(jsonResponse,
                 new TypeReference<List<Transaction>>() {
                 });
 
         for (Transaction tIssues : transactions) {
-            totalTotalTransactionAmout = tIssues.getAmount();
+            totalTotalTransactionAmout += tIssues.getAmount();
         }
 
         return totalTotalTransactionAmout;
-        // throw new UnsupportedOperationException();
-    }
+     }
 
     /**
      * Returns the sum of the amounts of all transactions sent by the specified
@@ -56,8 +54,9 @@ public class TransactionService {
     public double getTotalTransactionAmountSentBy(String senderFullName) throws IOException {
 
         double amount = 0;
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<Transaction> transactions = mapper.readValue(jsonResponse,
+      //  String jsonResponse = utilService.readText("../../transaction/transactions.json");
+      String jsonResponse = utilService.responseString;  
+      List<Transaction> transactions = mapper.readValue(jsonResponse,
                 new TypeReference<List<Transaction>>() {
                 });
 
@@ -78,8 +77,9 @@ public class TransactionService {
     public double getMaxTransactionAmount() throws IOException {
 
         double MaxAmount = 0;
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<Transaction> transactions = mapper.readValue(jsonResponse,
+      //  String jsonResponse = utilService.readText("../../transaction/transactions.json");
+      String jsonResponse = utilService.responseString;  
+      List<Transaction> transactions = mapper.readValue(jsonResponse,
                 new TypeReference<List<Transaction>>() {
                 });
 
@@ -100,8 +100,9 @@ public class TransactionService {
     public long countUniqueClients() throws IOException {
 
         String sendersName, recieversName;
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<Transaction> transactions = mapper.readValue(jsonResponse,
+      //  String jsonResponse = utilService.readText("../../transaction/transactions.json");
+      String jsonResponse = utilService.responseString;  
+      List<Transaction> transactions = mapper.readValue(jsonResponse,
                 new TypeReference<List<Transaction>>() {
                 });
 
@@ -131,8 +132,9 @@ public class TransactionService {
      */
     public boolean hasOpenComplianceIssues(String clientFullName) throws IOException {
 
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<Transaction> transactions = mapper.readValue(jsonResponse,
+       // String jsonResponse = utilService.readText("../../transaction/transactions.json");
+       String jsonResponse = utilService.responseString; 
+       List<Transaction> transactions = mapper.readValue(jsonResponse,
                 new TypeReference<List<Transaction>>() {
                 });
         Boolean response = false;
@@ -152,8 +154,9 @@ public class TransactionService {
      */
     public Map<String, Transaction> getTransactionsByBeneficiaryName() throws IOException {
            
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() { });
+      //  String jsonResponse = utilService.readText("../../transaction/transactions.json");
+      String jsonResponse = utilService.responseString;  
+      List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() { });
         
 
         Map<String,Transaction> map = new HashMap<String,Transaction>();
@@ -174,8 +177,9 @@ public class TransactionService {
     public Set<Integer> getUnsolvedIssueIds() throws IOException   {
 
 
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() {});
+      //  String jsonResponse = utilService.readText("../../transaction/transactions.json");
+      String jsonResponse = utilService.responseString;  
+      List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() {});
         Set<Integer> unresolvedIssueIds = new HashSet<Integer>();
 
         for (Transaction tIssue : transactions){
@@ -193,8 +197,9 @@ public class TransactionService {
      */
     public List<String> getAllSolvedIssueMessages() throws IOException {
 
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() {});
+      //  String jsonResponse = utilService.readText("../../transaction/transactions.json");
+      String jsonResponse = utilService.responseString;  
+      List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() {});
         List<String> solvedIssueMessages = new ArrayList<String>();
 
         for (Transaction tIssue : transactions){
@@ -211,7 +216,8 @@ public class TransactionService {
      */
     public List<Transaction> getTop3TransactionsByAmount() throws IOException {
 
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        //String jsonResponse = utilService.readText("../../transaction/transactions.json");
+        String jsonResponse = utilService.responseString;
         List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() {});
         
         transactions.sort(Comparator.comparingDouble(Transaction::getAmount).reversed());
@@ -227,8 +233,9 @@ public class TransactionService {
     public String getTopSender() throws IOException {
 
         
-        String jsonResponse = utilService.readText("../../transaction/transactions.json");
-        List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() {});
+       // String jsonResponse = utilService.readText("../../transaction/transactions.json");
+       String jsonResponse = utilService.responseString; 
+       List<Transaction> transactions = mapper.readValue(jsonResponse, new TypeReference<List<Transaction>>() {});
 
         Map<String,Double> map = new HashMap<String,Double>();
         Double amount=0d;
