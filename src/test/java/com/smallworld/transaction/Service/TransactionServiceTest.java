@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.util.Set;
 
 @SpringBootTest
 public class TransactionServiceTest {
@@ -96,5 +97,21 @@ public class TransactionServiceTest {
         // Assert
         Assertions.assertEquals(expected, actual, "Result  is incorrect");
     }
+
+
+     
+    @Test
+    public void getUnsolvedIssueIds() throws IOException {
+
+         Set<Integer> expected = Set.of(1, 3, 99, 54, 15);
+
+
+        // Act
+        Set<Integer> actual = transactionService.getUnsolvedIssueIds();
+
+        // Assert
+        Assertions.assertEquals(expected, actual, "Result  is incorrect");
+    }
+
 
 }

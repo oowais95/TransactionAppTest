@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Set;
 
 @RestController
 public class TransactionController {
@@ -57,6 +58,13 @@ public class TransactionController {
 
        return tService.getTopSender();
     }
+
+    @GetMapping("/getUnsolvedIssueIds")
+    public Set<Integer> getUnsolvedIssueIds() throws IOException {
+
+       return tService.getUnsolvedIssueIds();
+    }
+
 
     //other not implemented as it wasnt a requirement
 
