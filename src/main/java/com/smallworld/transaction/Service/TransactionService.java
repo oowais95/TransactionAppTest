@@ -54,6 +54,7 @@ public class TransactionService {
      */
     public double getTotalTransactionAmountSentBy(String senderFullName) throws IOException {
 
+        // senderFullName = "Billy Kimber";
         double amount = 0;
         // String jsonResponse =
         // utilService.readText("../../transaction/transactions.json");

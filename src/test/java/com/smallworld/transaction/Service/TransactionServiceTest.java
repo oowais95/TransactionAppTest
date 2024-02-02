@@ -3,7 +3,6 @@ package com.smallworld.transaction.Service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.smallworld.transaction.Service.TransactionService;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
@@ -70,6 +69,20 @@ public class TransactionServiceTest {
         // Assert
         Assertions.assertEquals(expected, actual, "Result  is incorrect");
     }
+
+
+    @Test
+    public void getTotalTransactionAmountSentBy() throws IOException {
+
+        double expected = 459.09;
+
+        // Act
+        double actual = transactionService.getTotalTransactionAmountSentBy("Billy Kimber");
+
+        // Assert
+        Assertions.assertEquals(expected, actual, "Result  is incorrect");
+    }
+
 
  
 
