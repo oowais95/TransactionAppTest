@@ -85,6 +85,16 @@ public class TransactionServiceTest {
 
 
  
+    @Test
+    public void hasOpenComplianceIssues() throws IOException {
 
+        Boolean expected = true;
+
+        // Act
+        Boolean actual = transactionService.hasOpenComplianceIssues("Grace Burgess");
+
+        // Assert
+        Assertions.assertEquals(expected, actual, "Result  is incorrect");
+    }
 
 }

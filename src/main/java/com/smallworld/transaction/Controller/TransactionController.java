@@ -44,7 +44,7 @@ public class TransactionController {
        return tService.countUniqueClients();
     }
 
-    @GetMapping("/hasOpenComplianceIssues")
+    @GetMapping("/hasOpenComplianceIssues{name}")
     public boolean hasOpenComplianceIssues(@PathVariable("name") String name) throws IOException {
 
        return tService.hasOpenComplianceIssues(name);

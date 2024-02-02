@@ -137,6 +137,8 @@ public class TransactionService {
      */
     public boolean hasOpenComplianceIssues(String clientFullName) throws IOException {
 
+
+        //clientFullName = "Grace Burgess";
         // String jsonResponse =
         // utilService.readText("../../transaction/transactions.json");
         String jsonResponse = utilService.responseString;
@@ -146,10 +148,14 @@ public class TransactionService {
         Boolean response = false;
 
         for (Transaction tIssues : transactions) {
-            if (tIssues.getIssueSolved() == true) {
-                response = true;
-                break;
+            if(tIssues.getBeneficiaryFullName().equals(clientFullName) || tIssues.getSenderFullName().equals(clientFullName))
+            {
+                if (tIssues.getIssueSolved() == true) {
+                    response = true;
+                    break;
+                }
             }
+           
         }
         return response;
     }
