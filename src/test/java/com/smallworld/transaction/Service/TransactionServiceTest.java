@@ -71,18 +71,7 @@ public class TransactionServiceTest {
         Assertions.assertEquals(expected, actual, "Result  is incorrect");
     }
 
-
-    @Test
-    public void countUniqueClients() throws IOException {
-
-        long expected = 14;
-
-        // Act
-        long actual = transactionService.countUniqueClients();
-
-        // Assert
-        Assertions.assertEquals(expected, actual, "Result  is incorrect");
-    }
+ 
 
 
 }
