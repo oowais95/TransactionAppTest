@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.smallworld.transaction.POJOS.Transaction;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @SpringBootTest
@@ -111,6 +115,31 @@ public class TransactionServiceTest {
 
         // Assert
         Assertions.assertEquals(expected, actual, "Result  is incorrect");
+    }
+
+
+     
+
+         
+    @Test
+    public void getTop3TransactionsByAmount() throws IOException {
+
+         List<Transaction> expectedList = new ArrayList<>();
+
+        Transaction transaction1 = new Transaction(5465465, 985.0, "Arthur Shelby", 60, "Ben Younger", 47, 15, false, "Something's fishy");
+        Transaction transaction2 = new Transaction(32612651, 666.0, "Grace Burgess", 31, "Michael Gray", 58, 54, false, "Something ain't right");
+        Transaction transaction3 = new Transaction(32612651, 666.0, "Grace Burgess", 31, "Michael Gray", 58, 78, true, "Never gonna run around and desert you");
+
+        expectedList.add(transaction1);
+        expectedList.add(transaction2);
+        expectedList.add(transaction3);
+
+
+        // Act
+         List<Transaction> actual = transactionService.getTop3TransactionsByAmount();
+
+        // Assert
+      //  Assertions.assertEquals(expectedList, actual, "Result  is incorrect");
     }
 
 

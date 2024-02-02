@@ -1,5 +1,6 @@
 package com.smallworld.transaction.Controller;
 
+import com.smallworld.transaction.POJOS.Transaction;
 import com.smallworld.transaction.Service.TransactionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -65,6 +67,14 @@ public class TransactionController {
        return tService.getUnsolvedIssueIds();
     }
 
+
+    
+    @GetMapping("/getTop3TransactionsByAmount")
+    public List<Transaction> getTop3TransactionsByAmount() throws IOException {
+
+       return tService.getTop3TransactionsByAmount();
+    }
+    
 
     //other not implemented as it wasnt a requirement
 

@@ -245,9 +245,9 @@ public class TransactionService {
         });
 
         transactions.sort(Comparator.comparingDouble(Transaction::getAmount).reversed());
-        transactions.subList(0, 3);
+        
 
-        return transactions;
+        return  transactions.subList(0, 3);
 
     }
 
